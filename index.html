@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flux Services</title>
+    <link rel="icon" type="image/png" href="3.png">
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        /* CSS Variables for reusability */
+        :root {
+            --primary-purple: #7c3aed;
+            --primary-orange: #f97316;
+            --light-orange: #e6804c;
+            --bright-orange: #fc5c0a;
+            --dark-bg: #211f1e;
+            --card-bg-start: #595656;
+            --card-bg-end: #3d3b3b;
+            --text-purple: #2e1065;
+            --shadow-sm: 0 4px 15px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 6px 20px rgba(0, 0, 0, 0.2);
+            --transition: all 0.3s ease;
+        }
+
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Manrope', sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: linear-gradient(to bottom, #ede9fe, #fef3c7);
+            color: var(--text-purple);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* Reusable Button Styles */
+        .btn {
+            padding: 12px 30px;
+            font-size: 16px;
+            font-weight: 600;
+            background: linear-gradient(45deg, var(--primary-purple), var(--primary-orange));
+            border: none;
+            border-radius: 25px;
+            color: #fff;
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            transition: left 0.4s;
+        }
+        .btn:hover::after {
+            left: 100%;
+        }
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: var(--shadow-lg);
+        }
+        .btn--large {
+            padding: 14px 40px;
+            font-size: 18px;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(20, 20, 20, 0.3);
+            backdrop-filter: blur(10px);
+            padding: 20px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            animation: slideDown 0.5s ease-out;
+        }
+        @keyframes slideDown {
+            from { transform: translateY(-100%); }
+            to { transform: translateY(0); }
+        }
+        .logo {
+            font-size: 28px;
+            font-weight: 800;
+            background: linear-gradient(45deg, var(--primary-purple), var(--primary-orange));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+        .nav-links a {
+            color: var(--light-orange);
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+        .nav-links a:hover {
+            color: var(--bright-orange);
+            transform: scale(1.1);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 120px 50px 50px;
+            background: var(--dark-bg);
+            text-align: center;
+        }
+        .hero-content {
+            max-width: 800px;
+            animation: fadeInUp 1s ease-out;
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .hero-content img {
+            max-width: 150px;
+            margin-bottom: 20px;
+        }
+        .hero-content h1 {
+            font-size: 58px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            background: linear-gradient(90deg, var(--primary-purple), var(--primary-orange));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .hero-content p {
+            font-size: 22px;
+            color: var(--light-orange);
+            margin-bottom: 30px;
+        }
+
+        /* Section Base Styles */
+        section {
+            padding: 80px 50px;
+            background: var(--dark-bg);
+            text-align: center;
+        }
+        section h2 {
+            font-size: 40px;
+            font-weight: 800;
+            margin-bottom: 50px;
+            background: linear-gradient(90deg, var(--primary-purple), #ea580c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: fadeIn 1s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Services Section */
+        .services h3 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            color: var(--primary-orange);
+        }
+        .services-container {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            max-width: 1200px;
+            margin: 0 auto 60px;
+        }
+        .service-card {
+            flex: 1;
+            min-width: 250px;
+            max-width: 350px;
+            background: linear-gradient(135deg, var(--card-bg-start), var(--card-bg-end));
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: var(--shadow-sm);
+            transition: transform 0.3s;
+            animation: slideUp 0.8s ease-out forwards;
+        }
+        .service-card:nth-child(1) { animation-delay: 0.2s; }
+        .service-card:nth-child(2) { animation-delay: 0.4s; }
+        .service-card:nth-child(3) { animation-delay: 0.6s; }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .service-card:hover {
+            transform: translateY(-10px);
+        }
+        .service-card h4 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--primary-orange);
+        }
+        .service-card p {
+            font-size: 18px;
+            color: var(--light-orange);
+            margin-bottom: 20px;
+        }
+        .service-card .price {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--bright-orange);
+            margin-bottom: 20px;
+        }
+
+        /* Experience Section */
+        .experience-container {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .experience-item {
+            background: linear-gradient(135deg, var(--card-bg-start), var(--card-bg-end));
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: var(--shadow-sm);
+            transition: transform 0.3s;
+            animation: fadeInLeft 0.8s ease-out forwards;
+        }
+        .experience-item:nth-child(1) { animation-delay: 0.2s; }
+        .experience-item:nth-child(2) { animation-delay: 0.4s; }
+        .experience-item:nth-child(3) { animation-delay: 0.6s; }
+        @keyframes fadeInLeft {
+            from { opacity: 0; transform: translateX(-30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        .experience-item:hover {
+            transform: translateY(-5px);
+        }
+        .experience-item h3 {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--primary-orange);
+        }
+        .experience-item p {
+            font-size: 16px;
+            color: var(--light-orange);
+        }
+
+        /* Footer */
+        footer {
+            padding: 60px 50px;
+            background: var(--dark-bg);
+            text-align: center;
+            color: var(--light-orange);
+        }
+        footer h3 {
+            font-size: 44px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            color: var(--primary-orange);
+        }
+        footer p {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        footer a {
+            color: #fb923c;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        footer a:hover {
+            color: var(--primary-orange);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            nav, section, footer {
+                padding: 60px 20px;
+            }
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            .services-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            .service-card {
+                width: 100%;
+                max-width: 400px;
+            }
+            .hero-content h1 {
+                font-size: 48px;
+            }
+            .hero-content p {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="logo">Flux Services</div>
+        <div class="nav-links">
+            <a href="#home">Home</a>
+            <a href="#services">Services</a>
+            <a href="#experience">Experience</a>
+            <a href="#contact">Contact</a>
+        </div>
+    </nav>
+
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <img src="3.png" alt="Title Image">
+            <h1>Welcome to Flux</h1>
+            <p>Flux offers top-notch website and Microsoft program services to bring your visions to life.</p>
+            <a href="#services"><button class="btn btn--large">Get Started</button></a>
+        </div>
+    </section>
+
+    <section class="services" id="services">
+        <h2>My Services</h2>
+        <h3>Websites</h3>
+        <div class="services-container">
+            <div class="service-card">
+                <h4>Basic Package</h4>
+                <p>Perfect for startups or small projects. Includes a simple website, 3 revisions, and some customizability.</p>
+                <div class="price">$49</div>
+                <a href="#contact"><button class="btn">Contact for Purchase</button></a>
+            </div>
+            <div class="service-card">
+                <h4>Plus Package</h4>
+                <p>Ideal for modern websites. Includes a premium website, 5 revisions, moderate customizability, and slight optimizations.</p>
+                <div class="price">$79</div>
+                <a href="#contact"><button class="btn">Contact for Purchase</button></a>
+            </div>
+            <div class="service-card">
+                <h4>Express Package</h4>
+                <p>Top of the line package. Includes a top-notch website, 20 revisions, fully customizable, express optimizations, and faster delivery time.</p>
+                <div class="price">$99</div>
+                <a href="#contact"><button class="btn">Contact for Purchase</button></a>
+            </div>
+        </div>
+        <h3>Microsoft Services</h3>
+        <div class="services-container">
+            <div class="service-card">
+                <h4>PowerPoint Package</h4>
+                <p>Perfect for presentations. Includes a custom PowerPoint template, 15 revisions, and advanced animations. Offers full customizability.</p>
+                <div class="price">$49</div>
+                <a href="#contact"><button class="btn">Contact for Purchase</button></a>
+            </div>
+            <div class="service-card">
+                <h4>Word Package</h4>
+                <p>Great for professional documents. Includes a custom Word template, 15 revisions, and advanced formatting. Offers full customizability.</p>
+                <div class="price">$49</div>
+                <a href="#contact"><button class="btn">Contact for Purchase</button></a>
+            </div>
+        </div>
+    </section>
+
+    <section class="experience" id="experience">
+        <h2>My Experience</h2>
+        <div class="experience-container">
+            <div class="experience-item">
+                <h3>Web Design</h3>
+                <p>Created 20+ sites for projects. Completed all within under 2 days.</p>
+            </div>
+            <div class="experience-item">
+                <h3>Microsoft Applications</h3>
+                <p>Certified Specialist in PowerPoint, Word, and Excel.</p>
+            </div>
+            <div class="experience-item">
+                <h3>Fast Working</h3>
+                <p>Fluent in HTML, CSS, JavaScript, and PHP, enabling efficient and quick website design.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contact">
+        <h3>Contact Me</h3>
+        <p>Email: <a href="mailto:fluxservices276@gmail.com">fluxservices276@gmail.com</a></p>
+        <p>Phone: (423) 482-2948</p>
+    </footer>
+</body>
+</html>
