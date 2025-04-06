@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chorus Client</title>
+    <title>chorus</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         * {
@@ -36,8 +36,8 @@
 
         .logo {
             font-size: 24px;
-            font-weight: 600;
-            letter-spacing: 1px;
+            font-weight: 500;
+            letter-spacing: 1.5px;
         }
 
         nav ul {
@@ -73,14 +73,15 @@
         }
 
         #hero h1 {
-            font-size: 48px;
+            font-size: 64px;
             margin-bottom: 20px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-weight: 700;
+            text-transform: lowercase;
+            letter-spacing: 1.5px;
+            font-weight: 400;
         }
 
         #hero p {
+            text-transform: lowercase;
             font-size: 18px;
             margin-bottom: 30px;
             opacity: 0.9;
@@ -92,6 +93,7 @@
             color: #000000;
             padding: 12px 30px;
             text-decoration: none;
+            text-transform: lowercase;
             border-radius: 25px;
             font-weight: 600;
             transition: transform 0.3s ease, background 0.3s ease;
@@ -114,12 +116,29 @@
             font-weight: 600;
         }
 
+        .category {
+            margin-bottom: 40px;
+            text-transform: lowercase;
+            text-align: center;
+        }
+
+        .category-title {
+            font-size: 28px;
+            font-weight: 600;
+            color: #BB86FC;
+            margin-bottom: 20px;
+            text-transform: lowercase;
+            text-align: center;
+        }
+
         .feature-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            display: flex;
+            justify-content: center; /* Center items horizontally */
+            flex-wrap: wrap; /* Allow wrapping for responsiveness */
             gap: 20px;
             max-width: 1200px;
             margin: 0 auto;
+            text-transform: lowercase;
         }
 
         .feature-item {
@@ -129,6 +148,9 @@
             font-size: 18px;
             font-weight: 400;
             transition: transform 0.3s ease;
+            text-transform: lowercase;
+            min-width: 200px; /* Ensure consistent sizing */
+            flex: 0 1 auto; /* Allow items to shrink/grow but respect min-width */
         }
 
         .feature-item:hover {
@@ -137,12 +159,14 @@
 
         /* Footer */
         footer {
+            text-transform: lowercase;
             text-align: center;
             padding: 20px;
             background: rgba(0, 0, 0, 0.3);
         }
 
         footer p {
+            text-transform: lowercase;
             font-size: 14px;
             opacity: 0.8;
             font-weight: 300;
@@ -152,34 +176,85 @@
 <body>
     <header>
         <nav>
-            <div class="logo">Chorus</div>
+            <div class="logo">chorus</div>
             <ul>
-                <li><a href="#home">Home</a></li>
-                <li><a href="#features">Features</a></li>
-                <li><a href="#download">Download</a></li>
-                <li><a href="#contact">Contact</a></li>
+                <li><a href="#home">home</a></li>
+                <li><a href="#features">features</a></li>
+                <li><a href="#purchase">purchase</a></li>
             </ul>
         </nav>
     </header>
 
     <section id="hero">
-        <h1>Unleash Your Power</h1>
-        <p>The ultimate Minecraft hacked client experience.</p>
-        <a href="#download" class="btn">Download Now</a>
+        <h1>chorus</h1>
+        <p>the premium light-weight client experience.</p>
+        <a href="#purchase" class="btn">purchase now</a>
     </section>
 
     <section id="features">
-        <h2>Features</h2>
-        <div class="feature-grid">
-            <div class="feature-item">Aimbot</div>
-            <div class="feature-item">Kill Aura</div>
-            <div class="feature-item">ESP</div>
-            <div class="feature-item">Fly Hack</div>
+        <h2>features</h2>
+
+        <!-- Combat Category -->
+        <div class="category">
+            <h3 class="category-title">combat</h3>
+            <div class="feature-grid">
+                <div class="feature-item">crits</div>
+                <div class="feature-item">aura</div>
+                <div class="feature-item">targetstrafe</div>
+                <div class="feature-item">velocity</div>
+            </div>
+        </div>
+
+        <!-- Movement Category -->
+        <div class="category">
+            <h3 class="category-title">movement</h3>
+            <div class="feature-grid">
+                <div class="feature-item">speed</div>
+                <div class="feature-item">fly</div>
+                <div class="feature-item">step</div>
+                <div class="feature-item">longjump</div>
+                <div class="feature-item">scaffold</div>
+                <div class="feature-item">invmove</div>
+            </div>
+        </div>
+
+        <!-- Visuals Category -->
+        <div class="category">
+            <h3 class="category-title">visuals</h3>
+            <div class="feature-grid">
+                <div class="feature-item">esp</div>
+                <div class="feature-item">name tags</div>
+                <div class="feature-item">arraylist</div>
+                <div class="feature-item">fullbright</div>
+                <div class="feature-item">chams</div>
+                <div class="feature-item">fps optimization</div>
+            </div>
+        </div>
+
+        <!-- Player Category -->
+        <div class="category">
+            <h3 class="category-title">player</h3>
+            <div class="feature-grid">
+                <div class="feature-item">nofall</div>
+                <div class="feature-item">manager</div>
+                <div class="feature-item">stealer</div>
+
+            </div>
+        </div>
+
+        <!-- Other Category -->
+        <div class="category">
+            <h3 class="category-title">other</h3>
+            <div class="feature-grid">
+                <div class="feature-item">ping spoof</div>
+                <div class="feature-item">disabler</div>
+
+            </div>
         </div>
     </section>
 
     <footer>
-        <p>© 2025 Chorus. All rights reserved.</p>
+        <p>© 2025 chorus. all rights reserved.</p>
     </footer>
 </body>
 </html>
